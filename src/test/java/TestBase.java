@@ -1,33 +1,41 @@
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TestBase {
-    public static ThreadLocal<WebDriver> t1Driver = new ThreadLocal<>();
-    public  WebDriver driver;
+    public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
+    public WebDriver driver;
     public WebDriverWait wait;
 
-
-    @BeforeEach
+    @Before
     public void start() {
-        if (t1Driver.get() != null) {
-            driver = t1Driver.get();
+        if (tlDriver.get() != null) {
+            driver = tlDriver.get();
             wait = new WebDriverWait(driver, 10);
             return;
         }
-        driver = new FirefoxDriver();
-        t1Driver.set(driver);
-        System.out.println(((HasCapabilities) driver).getCapabilities());
+
+        driver = new ChromeDriver();
+        tlDriver.set(driver);
         wait = new WebDriverWait(driver, 10);
+
         Runtime.getRuntime().addShutdownHook(
                 new Thread(() -> {
                     driver.quit();
                     driver = null;
-                })
-        );
+                }));
+    }
+
+    @After
+    public void stop() {
+        //driver.quit();
+        //driver = null;
     }
 
     public boolean isElementPresent(By locator) {
@@ -41,10 +49,4 @@ public class TestBase {
         }
 
     }
-
-//    @AfterEach
-//    public void stop(){
-//        driver.quit();
-//        driver = null;
-//    }
 }
