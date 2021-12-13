@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chromium.ChromiumDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -24,9 +23,9 @@ public class LiteCartTabTests {
     }
 
     @Test
-    public void checkTemplateTab() {
+    public void checkTabTest() {
         driver.get("http://localhost/litecart/admin/");
-        wait = new WebDriverWait(driver, Duration.ofMillis(3000));
+        wait = new WebDriverWait(driver, 10);
         driver.findElement(By.name("username")).click();
         driver.findElement(By.name("username")).sendKeys("admin");
         driver.findElement(By.name("password")).click();
