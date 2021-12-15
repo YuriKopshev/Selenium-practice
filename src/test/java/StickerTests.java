@@ -8,6 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StickerTests {
@@ -23,16 +24,14 @@ public class StickerTests {
     public void checkStickerTest() {
         driver.get("http://localhost/litecart/");
         wait = new WebDriverWait(driver, 10);
-        driver.findElement(By.cssSelector("#box-most-popular [title='Purple Duck'] [title='New']"));
-        driver.findElement(By.cssSelector("#box-most-popular [title='Green Duck'] [title='New']"));
-        driver.findElement(By.cssSelector("#box-most-popular [title='Blue Duck'] [title='New']"));
-        driver.findElement(By.cssSelector("#box-most-popular [title='Yellow Duck'] [title='On Sale']"));
-        driver.findElement(By.cssSelector("#box-campaigns [title='Yellow Duck'] [title='On Sale']"));
-        driver.findElement(By.cssSelector("#box-latest-products [title='Yellow Duck'] [title='On Sale']"));
-        driver.findElement(By.cssSelector("#box-latest-products [title='Green Duck'] [title='New']"));
-        driver.findElement(By.cssSelector("#box-latest-products [title='Red Duck'] [title='New']"));
-        driver.findElement(By.cssSelector("#box-latest-products [title='Blue Duck'] [title='New']"));
-        driver.findElement(By.cssSelector("#box-latest-products [title='Purple Duck'] [title='New']"));
+        List<WebElement> productList = driver.findElements(By.cssSelector("ul.listing-wrapper >li"));
+        for (WebElement element : productList) {
+            List<WebElement> sticker = element.findElements(By.cssSelector("div.sticker"));
+            if (sticker.size() != 1) {
+                System.out.println("Error: More one sticker!");
+                driver.close();
+            }
+        }
     }
 
     @AfterEach

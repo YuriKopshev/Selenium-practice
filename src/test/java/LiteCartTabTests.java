@@ -31,12 +31,15 @@ public class LiteCartTabTests {
         driver.findElement(By.name("password")).click();
         driver.findElement(By.name("password")).sendKeys("admin");
         driver.findElement(By.name("login")).click();
-        List<WebElement> elementList = driver.findElements(By.cssSelector("#box-apps-menu a"));
-        int numberOfListElements = elementList.size();
-        for (int i = 0; i < numberOfListElements; i++) {
-            elementList = driver.findElements(By.cssSelector("#box-apps-menu a"));
-            elementList.get(i).click();
-            driver.findElement(By.cssSelector("h1"));
+        List<WebElement> links = driver.findElements(By.cssSelector("#box-apps-menu > li"));
+        for (int i = 1; i <= links.size(); i++) {
+            driver.findElement(By.cssSelector("#box-apps-menu > li:nth-child(" + i + ")")).click();
+            if (driver.findElements(By.cssSelector("#box-apps-menu > li:nth-child(" + i + ") li")).size() != 0) {
+                for (int y = 1; y <= driver.findElements(By.cssSelector("#box-apps-menu > li:nth-child(" + i + ") li")).size(); y++) {
+                    driver.findElement(By.cssSelector("#box-apps-menu > li:nth-child(" + i + ") > ul > li:nth-child(" + y + ")")).click();
+                    driver.findElement(By.cssSelector("h1"));
+                }
+            }
         }
     }
 
