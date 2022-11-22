@@ -19,7 +19,8 @@ public class LiteCartTabTests {
 
     @BeforeEach
     public void start() {
-        driver = new FirefoxDriver();
+        //driver = new FirefoxDriver();
+        driver = new ChromeDriver();
     }
 
     @Test

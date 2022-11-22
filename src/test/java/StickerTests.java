@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -17,7 +18,8 @@ public class StickerTests {
 
     @BeforeEach
     public void start() {
-        driver = new FirefoxDriver();
+        //driver = new FirefoxDriver();
+        driver = new ChromeDriver();
     }
 
     @Test
