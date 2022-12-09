@@ -9,6 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -53,16 +55,14 @@ public class TestEdgeProductValues {
     public void productRegularPriceColorTest() {
         driver.get("http://localhost/litecart/en/");
         String titleRegularPriceColor = driver.findElement(By.cssSelector("#box-campaigns .regular-price")).getCssValue("color");
-        String grayRGBa = "119, 119, 119, 1";
-        assertEquals(grayRGBa, titleRegularPriceColor.substring(5, 21).trim());
+        assertTrue(isGrey(titleRegularPriceColor));
     }
 
     @Test
     public void productPromotionalPriceColorTest() {
         driver.get("http://localhost/litecart/en/");
         String titlePromotionalPriceColor = driver.findElement(By.cssSelector("#box-campaigns .campaign-price")).getCssValue("color");
-        String redRGBa = "204, 0, 0, 1";
-        assertEquals(redRGBa, titlePromotionalPriceColor.substring(5, 17).trim());
+        assertTrue(isRed(titlePromotionalPriceColor));
     }
 
     @Test
@@ -70,8 +70,7 @@ public class TestEdgeProductValues {
         driver.get("http://localhost/litecart/en/");
         driver.findElement(By.cssSelector("#box-campaigns .name ")).click();
         String insideRegularPriceColor = driver.findElement(By.cssSelector(".regular-price")).getCssValue("color");
-        String grayRGBa = "102, 102, 102, 1";
-        assertEquals(grayRGBa, insideRegularPriceColor.substring(5, 21).trim());
+        assertTrue(isGrey(insideRegularPriceColor));
     }
 
     @Test
@@ -79,8 +78,7 @@ public class TestEdgeProductValues {
         driver.get("http://localhost/litecart/en/");
         driver.findElement(By.cssSelector("#box-campaigns .name ")).click();
         String insidePromotionalPriceColor = driver.findElement(By.cssSelector(".campaign-price")).getCssValue("color");
-        String redRGBa = "204, 0, 0, 1";
-        assertEquals(redRGBa, insidePromotionalPriceColor.substring(5, 17).trim());
+        assertTrue(isRed(insidePromotionalPriceColor));
     }
 
     @Test
@@ -104,5 +102,22 @@ public class TestEdgeProductValues {
     public void stop() {
         driver.quit();
         driver = null;
+    }
+
+    public boolean isGrey(String rgba) {
+        String resultString = rgba.replaceAll(" ", "");
+        String[] resultRgba;
+        resultRgba = resultString.substring(5, 18).trim().split(",");
+        System.out.println(Arrays.toString(resultRgba));
+        return Integer.parseInt(resultRgba[0]) == Integer.parseInt(resultRgba[1]) &&
+                Integer.parseInt(resultRgba[1]) == Integer.parseInt(resultRgba[2]);
+    }
+
+    public boolean isRed(String rgba) {
+        String resultString = rgba.replaceAll(" ", "");
+        String[] resultRgba;
+        resultRgba = resultString.substring(5, 14).trim().split(",");
+        System.out.println(Arrays.toString(resultRgba));
+        return Integer.parseInt(resultRgba[1]) == Integer.parseInt(resultRgba[2]);
     }
 }

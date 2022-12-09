@@ -16,6 +16,7 @@ dependencies {
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
     // https://mvnrepository.com/artifact/ru.stqa.selenium/webdriver-factory
     implementation group: 'ru.stqa.selenium', name: 'webdriver-factory', version: '4.4'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
 
 }
